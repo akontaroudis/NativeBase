@@ -92,6 +92,14 @@ class Header extends Component {
       : variable;
     const platformStyle = variables.platformStyle;
 
+    let xtra_styles = {}
+    if (variables.isIphoneX && this.props.ignoreSafeArea) {
+      xtra_styles = {
+        marginTop: 0,
+        paddingTop: 0,
+      }
+    }
+
     return (
       <View onLayout={e => this.layoutChange(e.nativeEvent.layout)}>
         <StatusBar
@@ -109,7 +117,7 @@ class Header extends Component {
           }
           translucent={transparent ? true : translucent}
         />
-        {variables.isIphoneX ? (
+        {variables.isIphoneX && !this.props.ignoreSafeArea ? (
           <View
             ref={c => (this._root = c)}
             {...this.props}
@@ -122,7 +130,7 @@ class Header extends Component {
             ]}
           />
         ) : (
-          <View ref={c => (this._root = c)} {...this.props} />
+          <View ref={c => (this._root = c)} {...this.props} style={[this.props.style,xtra_styles]} />
         )}
       </View>
     );
@@ -137,7 +145,8 @@ Header.propTypes = {
     PropTypes.array
   ]),
   searchBar: PropTypes.bool,
-  rounded: PropTypes.bool
+  rounded: PropTypes.bool,
+  ignoreSafeArea: PropTypes.bool
 };
 
 const StyledHeader = connectStyle(

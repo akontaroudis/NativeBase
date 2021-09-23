@@ -14,7 +14,11 @@ const isIphoneX =
   (deviceHeight === 812 ||
     deviceWidth === 812 ||
     deviceHeight === 896 ||
-    deviceWidth === 896);
+    deviceWidth === 896 ||
+    deviceHeight === 844 ||
+    deviceWidth === 844 ||
+    deviceHeight === 926 ||
+    deviceWidth === 926);
 
 export default {
   platformStyle,
