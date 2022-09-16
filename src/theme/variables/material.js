@@ -9,6 +9,12 @@ const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 const platform = Platform.OS;
 const platformStyle = PLATFORM.MATERIAL;
+const isiPhone14Pro =
+  platform === PLATFORM.IOS &&
+  (deviceWidth === 393 ||
+    deviceHeight === 852 ||
+    deviceWidth === 430 ||
+    deviceWidth === 932);
 const isIphoneX =
   platform === PLATFORM.IOS &&
   (deviceHeight === 812 ||
@@ -18,8 +24,8 @@ const isIphoneX =
     deviceHeight === 844 ||
     deviceWidth === 844 ||
     deviceHeight === 926 ||
-    deviceWidth === 926);
-
+    deviceWidth === 926 ||
+    isiPhone14Pro);
 export default {
   platformStyle,
   platform,
@@ -184,14 +190,10 @@ export default {
   toolbarDefaultBorder: '#3F51B5',
   iosStatusbar: 'light-content',
   get statusBarColor() {
-    return color(this.toolbarDefaultBg)
-      .darken(0.2)
-      .hex();
+    return color(this.toolbarDefaultBg).darken(0.2).hex();
   },
   get darkenHeader() {
-    return color(this.tabBgColor)
-      .darken(0.03)
-      .hex();
+    return color(this.tabBgColor).darken(0.03).hex();
   },
 
   // Icon
@@ -288,21 +290,22 @@ export default {
   deviceWidth,
   deviceHeight,
   isIphoneX,
+  isiPhone14Pro,
   inputGroupRoundedBorderRadius: 30,
 
   // iPhoneX SafeArea
   Inset: {
     portrait: {
-      topInset: 24,
+      topInset: isiPhone14Pro ? 30 : 24,
       leftInset: 0,
       rightInset: 0,
-      bottomInset: 34
+      bottomInset: 34,
     },
     landscape: {
       topInset: 0,
       leftInset: 44,
       rightInset: 44,
-      bottomInset: 21
-    }
-  }
+      bottomInset: 21,
+    },
+  },
 };
